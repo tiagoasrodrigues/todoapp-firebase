@@ -5,11 +5,45 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>\TODO APP</title>
+  <title>TODO APP</title>
 </head>
 
 <body>
+  <div class="login">
+    <h2>Faça seu login no App</h2>
+    <form>
+      <input type="email" name="email" />
+      <input type="password" name="password" />
+      <input type="submit" name="submit" value="Login" />
+  </div>
+  <!--login-->
 
+  <div class="container-login">
+
+  </div>
+  <!--container-login-->
+
+
+
+  <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-firestore.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyD_RFWF3lFst2Uw7oPngc7FDxlIqd8Qcc8",
+      authDomain: "todolist-7010b.firebaseapp.com",
+      projectId: "todolist-7010b",
+      storageBucket: "todolist-7010b.appspot.com",
+      messagingSenderId: "537964582822",
+      appId: "1:537964582822:web:2a5000c4fac39896cb2167"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    //Começamos aqui.
+  </script>
 </body>
 
 </html>
