@@ -1,6 +1,7 @@
 <html lang="pt-br">
 
 <head>
+  <link rel="stylesheet" href="style.css" />
   <title>TODO APP</title>
   <style>
     .container-login {
@@ -12,15 +13,20 @@
 <body>
   <div class="login">
     <h2>Faça seu login no App</h2>
-    <form>
+    <form class='login-form'>
       <input type="email" name="email" />
       <input type="password" name="password" />
-      <input type="submit" name="submit" value="Login" />
+      <input type="submit" name="submit" value="Logar" />
   </div>
   <!--login-->
 
   <div class="container-login">
-    <h2>Olá, você está logado!<a class='logout' href='javascript:void(0)'>Logout</a></h2>
+    <h2>Olá, você está logado!<a class='logout' href='javascript:void(0)'>Deslogar</a></h2>
+    <form class="form-register-task">
+      <textarea name='task'></textarea>
+      <input type="datetime-local" name='datetime' />
+      <input type="submit" name='submit' value='Cadastrar tarefa' />
+    </form>
   </div>
   <!--container-login-->
 
@@ -44,14 +50,14 @@
     //Começamos aqui.
     var users = null;
 
-    var formLogin = document.querySelector('form');
-    var pressLogout = document.querySelector('.logout')
+    var formLogin = document.querySelector('form.login-form');
+    var pressLogout = document.querySelector('.logout');
 
 
     formLogin.addEventListener('submit', (e) => {
       e.preventDefault();
-      let email = document.querySelector('[name = email]').value
-      let password = document.querySelector('[name = password]').value
+      let email = document.querySelector('[name=email]').value
+      let password = document.querySelector('[name=password]').value
       //alert(email);
       //alert(password);
 
@@ -59,9 +65,10 @@
         .then((userCredential) => {
           // Signed in
           users = userCredential.user;
+
+          alert('Logado com sucesso ' + users.email);
           document.querySelector('.login').style.display = 'none';
           document.querySelector('.container-login').style.display = 'block';
-          alert('Logado com sucesso ' + users.email);
 
           formLogin.reset();
         })
@@ -70,6 +77,15 @@
           var errorMessage = error.message;
           alert(errorMessage)
         });
+    })
+
+    firebase.auth().onAuthStateChanged((val) => {
+      if (val) {
+        users = val;
+        alert('Bem-vindo de volta ' + users.email);
+        document.querySelector('.login').style.display = 'none';
+        document.querySelector('.container-login').style.display = 'block';
+      }
     })
 
     pressLogout.addEventListener('click', (e) => {
@@ -84,10 +100,7 @@
       }).catch((error) => {
         alert(error)
       });
-    })
-
-
-
+    });
   </script>
 </body>
 
