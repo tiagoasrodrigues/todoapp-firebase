@@ -1,11 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TODO APP</title>
+  <style>
+    .container-login {
+      display: none;
+    }
+  </style>
 </head>
 
 <body>
@@ -19,11 +20,9 @@
   <!--login-->
 
   <div class="container-login">
-
+    <h2>Olá, você está logado!<a class='logout' href='javascript:void(0)'>Logout</a></h2>
   </div>
   <!--container-login-->
-
-
 
   <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-auth.js"></script>
@@ -43,6 +42,52 @@
     firebase.initializeApp(firebaseConfig);
 
     //Começamos aqui.
+    var users = null;
+
+    var formLogin = document.querySelector('form');
+    var pressLogout = document.querySelector('.logout')
+
+
+    formLogin.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let email = document.querySelector('[name = email]').value
+      let password = document.querySelector('[name = password]').value
+      //alert(email);
+      //alert(password);
+
+      firebase.auth().signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          // Signed in
+          users = userCredential.user;
+          document.querySelector('.login').style.display = 'none';
+          document.querySelector('.container-login').style.display = 'block';
+          alert('Logado com sucesso ' + users.email);
+
+          formLogin.reset();
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          alert(errorMessage)
+        });
+    })
+
+    pressLogout.addEventListener('click', (e) => {
+      e.preventDefault();
+
+
+      firebase.auth().signOut().then(() => {
+        users = null;
+        document.querySelector('.login').style.display = 'block';
+        document.querySelector('.container-login').style.display = 'none';
+        alert('Deslogado');
+      }).catch((error) => {
+        alert(error)
+      });
+    })
+
+
+
   </script>
 </body>
 
